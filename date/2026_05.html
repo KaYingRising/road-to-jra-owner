@@ -4,28 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <title>中央競馬への道</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const horses = document.querySelectorAll('.galloping-horse');
-            
-            horses.forEach(horse => {
-                // 1周のタイムを「5.0秒 〜 8.0秒」の間でランダムに決定
-                const lapTime = (Math.random() * 3 + 5).toFixed(2);
-                
-                // 上下に弾むリズムも「0.3秒 〜 0.5秒」の間でランダムにズラす
-                const bounceTime = (Math.random() * 0.2 + 0.3).toFixed(2);
-                
-                // CSSの animation-duration（アニメーションの長さ）だけを上書き
-                horse.style.animationDuration = `${lapTime}s, ${bounceTime}s`;
-            });
-        });
-    </script>
-</body>
-</html>
     <h1 class="mission-statement">
         <span class="galloping-horse horse-1"><span class="jockey">🏇</span></span>
         <span class="galloping-horse horse-2"><span class="jockey">🏇</span></span>
@@ -38,6 +20,7 @@
 
         <span class="turf-lane">JRA馬主</span>
     </h1>
+
     <div class="container">
         <div class="week-column">
             <h3>5/10(日)～</h3><pre>2026/05/10(日)
@@ -71,7 +54,6 @@ HPの目的：投資の勉強をメモに残す
 test
 ...
             </pre>
-   
         </div>
         <div class="week-column">
             <h3>5/24(日)～</h3>
@@ -82,6 +64,22 @@ test
             <pre>test</pre>
         </div>
     </div>
-</body>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const horses = document.querySelectorAll('.galloping-horse');
+            
+            horses.forEach(horse => {
+                // 1周のタイムを「5.0秒 〜 8.0秒」の間でランダムに決定
+                const lapTime = (Math.random() * 3 + 5).toFixed(2);
+                
+                // 上下に弾むリズムも「0.3秒 〜 0.5秒」の間でランダムにズラす
+                const bounceTime = (Math.random() * 0.2 + 0.3).toFixed(2);
+                
+                // CSSの animation-duration（アニメーションの長さ）だけを上書き
+                horse.style.animationDuration = `${lapTime}s, ${bounceTime}s`;
+            });
+        });
+    </script>
+</body>
 </html>
