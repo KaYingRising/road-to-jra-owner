@@ -3,31 +3,116 @@ body {
     margin: 0;
     padding: 0;
 }
-/* 目標のスタイル */
+
+/* =========================================
+   1. 目標：JRA馬主の部分（Ultimate Oval Course）
+   ========================================= */
+
+/* 全体のコンテナ（競馬場の周回コース） */
 .mission-statement {
     text-align: center;
-    font-weight: 900;
-    font-size: 1.8em;
-    letter-spacing: 0.1em; /* 文字の間隔を広げて高級感を出す */
-    padding: 10px 0;
-    border-bottom: 2px solid #000;
+    margin: 10px auto;
+    padding: 35px 0;
+    width: 85%;
+    max-width: 650px;
+    
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    border-radius: 60px;
+    border: 4px solid #ffffff;
+    box-shadow: inset 0 0 0 4px #1b5e20, inset 0 0 0 6px #ffffff, 0 6px 20px rgba(0,0,0,0.4);
+    
+    position: relative;
+    z-index: 1;
 }
-/* 全体のレイアウト */
+
+/* 中央の文字（JRA馬主） */
+.turf-lane {
+    display: block;
+    position: relative;
+    z-index: 2; 
+    
+    font-family: 'Georgia', serif;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: #fbc02d; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
+    letter-spacing: 0.15em;
+}
+
+/* 両端の「|」装飾（ゴール板のイメージ） */
+.turf-lane::before,
+.turf-lane::after {
+    content: "|";
+    color: rgba(255,255,255,0.5);
+    font-size: 1.5em;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.turf-lane::before { left: 15px; }
+.turf-lane::after { right: 15px; }
+
+
+/* --- コースを周回する馬のアニメーション --- */
+.galloping-horse {
+    font-size: 2rem;
+    position: absolute;
+    z-index: 3;
+    animation: 
+        track-lap 6s linear infinite,
+        dynamic-gallop 0.4s ease-in-out infinite;
+}
+
+/* 左右完全対称で、絶対にはみ出さない周回アニメーション */
+@keyframes track-lap {
+    /* 向正面（上部の直線）：右から左へ */
+    0%   { left: 85%; top: 5px; transform: scaleX(1); }
+    30%  { left: 15%; top: 5px; transform: scaleX(1); }
+    
+    /* 左カーブ（第3〜第4コーナー）：細かく刻んで滑らかに */
+    34%  { left: 8%; top: 10px; transform: scaleX(1); }
+    37%  { left: 15px; top: 25px; transform: scaleX(1); }
+    40%  { left: 0px; top: calc(50% - 15px); transform: scaleX(1); } /* 左カーブ頂点（はみ出さない） */
+    40.1%{ left: 0px; top: calc(50% - 15px); transform: scaleX(-1); } /* 瞬時に反転 */
+    43%  { left: 15px; top: calc(100% - 55px); transform: scaleX(-1); }
+    46%  { left: 8%; top: calc(100% - 40px); transform: scaleX(-1); }
+    50%  { left: 15%; top: calc(100% - 35px); transform: scaleX(-1); }
+    
+    /* ホームストレッチ（下部の直線）：左から右へ */
+    80%  { left: 85%; top: calc(100% - 35px); transform: scaleX(-1); }
+    
+    /* 右カーブ（第1〜第2コーナー）：左と全く同じ比率で対称に！ */
+    84%  { left: 92%; top: calc(100% - 40px); transform: scaleX(-1); }
+    87%  { left: calc(100% - 45px); top: calc(100% - 55px); transform: scaleX(-1); }
+    90%  { left: calc(100% - 30px); top: calc(50% - 15px); transform: scaleX(-1); } /* 右カーブ頂点（馬の幅を考慮して30px内側へ） */
+    90.1%{ left: calc(100% - 30px); top: calc(50% - 15px); transform: scaleX(1); } /* 瞬時に反転 */
+    93%  { left: calc(100% - 45px); top: 25px; transform: scaleX(1); }
+    96%  { left: 92%; top: 10px; transform: scaleX(1); }
+    100% { left: 85%; top: 5px; transform: scaleX(1); }
+}git add .
+
+/* 馬が弾む動き */
+@keyframes dynamic-gallop {
+    0%, 100% { margin-top: 0; }
+    50%      { margin-top: -8px; }
+}
+
+
+/* =========================================
+   2. 全体のレイアウト（横並びカラムの復元）
+   ========================================= */
+
 .container {
     display: flex;
     align-items: flex-start;
     gap: 0;
     overflow-x: auto;
-    /* 上・右・下は 20px、左は 0 */
-    /* padding: 20px 20px 20px 0; */
 }
 
 /* 1週間ごとの列 */
 .week-column {
     min-width: 280px;
-    /* 右側の境界線 */
     border-right: 1px solid #ccc; 
-    /* 左右の余白をすべて 0 に */
     padding-left: 0;
     padding-right: 0; 
 }
@@ -35,21 +120,16 @@ body {
 /* 日記のテキスト */
 pre {
     white-space: pre-wrap;
-    /* font-family: "Consolas", "MS Gothic", monospace; */
-    /* line-height: 1.8; */
     margin: 0;
-    /* 1. 上に数ピクセル持ち上げて、ボーダーに密着させる */
     margin-top: 5px; 
     padding: 0;
+    font-family: inherit; /* フォントを馴染ませる */
 }
 
 /* 見出し */
 h3 {
     border-bottom: 2px solid #333;
     padding: 0;
-    /* 3. 上下の外側余白を完全に 0 に */
     margin: 0; 
-    /* 4. 行の高さを見出しの文字サイズギリギリ（1.0）に設定 */
     line-height: 1.0; 
-    /* font-size: 1.2em; */
 }
